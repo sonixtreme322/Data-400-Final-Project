@@ -1,0 +1,120 @@
+,Price Ranges,Price Floor (Local),Price Floor (USD) [As of 2026-03-20]
+1,USA luxury,75,75
+2,USA premium,50,50
+3,USA mid-range,25,25
+4,France luxury,100,115.45
+5,France premium,60,69.27
+6,Principality of Monaco luxury,100,115.45
+7,France mid-range,35,40.41
+8,Portugal premium,60,69.27
+9,Portugal luxury,100,115.45
+10,Portugal mid-range,35,40.41
+11,South Korea premium,150000,99.83
+12,South Korea luxury,250000,166.39
+13,South Korea mid-range,50000,33.28
+14,Malta premium,60,69.27
+15,Malta luxury,100,115.45
+16,United Kingdom luxury,90,120.04
+17,United Kingdom premium,50,66.69
+18,Ireland luxury,100,115.45
+19,United Kingdom mid-range,25,33.25
+20,Ireland premium,60,69.27
+21,Czech Republic premium,1200,56.61
+22,Czech Republic luxury,2000,94.36
+23,Serbia premium,6000,58.99
+24,Serbia luxury,10000,98.32
+25,Qatar luxury,350,95.74
+26,Qatar premium,250,68.38
+27,Türkiye luxury,4000,90.26
+28,Türkiye premium,2400,54.15
+29,Türkiye mid-range,1200,27.08
+30,Thailand luxury,4000,121.64
+31,Thailand premium,1500,45.62
+32,Thailand mid-range,300,9.12
+33,Spain luxury,100,115.45
+34,Spain mid-range,35,40.41
+35,Spain premium,60,69.27
+36,Andorra luxury,100,115.45
+37,Spain affordable,0,0
+38,China Mainland luxury,1000,144.92
+39,China Mainland premium,400,57.97
+40,China Mainland mid-range,100,14.49
+41,Chinese Mainland premium,400,57.97
+42,Italy luxury,100,115.45
+43,Italy mid-range,35,40.41
+44,Italy premium,60,69.27
+45,Malaysia luxury,600,152.32
+46,Malaysia premium,200,50.77
+47,Malaysia mid-range,40,10.15
+48,The Philippines luxury,5000,83.37
+49,The Philippines premium,2500,41.68
+50,Abu Dhabi mid-range,150,40.84
+51,Abu Dhabi luxury,350,95.30
+52,Latvia luxury,100,115.45
+53,Switzerland luxury,150,190.12
+54,Switzerland premium,80,101.39
+55,Liechtenstein premium,80,101.39
+56,Hungary luxury,30000,88.24
+57,Hungary premium,20000,58.83
+58,Netherlands luxury,100,115.45
+59,Netherlands premium,60,69.27
+60,Canada luxury,105,76.54
+61,Canada premium,70,51.02
+62,Japan luxury,30000,188.58
+63,Japan premium,10000,62.86
+64,Japan mid-range,5000,31.43
+65,Taiwan luxury,4000,124.99
+66,Taiwan premium,2000,62.49
+67,Taiwan mid-range,300,9.37
+68,Singapore luxury,300,234.13
+69,Singapore premium,150,117.07
+70,Singapore affordable,0,0
+71,Singapore mid-range,25,19.51
+72,Croatia luxury,100,115.45
+73,Croatia premium,60,69.27
+74,Estonia luxury,100,115.45
+75,Germany luxury,100,115.45
+76,Germany premium,60,69.27
+77,Denmark luxury,1800,278.27
+78,Denmark premium,1000,152.59
+79,Norway luxury,1500,156.83
+80,Norway premium,1000,104.55
+81,Finland luxury,100,115.45
+82,Sweden premium,1000,106.93
+83,Sweden luxury,1800,192.47
+84,Sweden mid-range,600,64.16
+85,Denmark mid-range,600,92.76
+86,Iceland luxury,1800,14.46
+87,Slovenia luxury,100,115.45
+88,Slovenia premium,600,69.27
+89,Poland luxury,400,108.02
+90,Vietnam luxury,2400000,91.21
+91,Vietnam premium,1500000,57.01
+92,Vietnam mid-range,400000,15.20
+93,Mexico affordable,0,0
+94,Mexico luxury,600,33.55
+95,Mexico premium,200,11.18
+96,Mexico mid-range,40,2.24
+97,Lithuania luxury,100,115.45
+98,Lithuania premium,60,69.27
+99,Dubai luxury,350,95.30
+100,Dubai premium,250,68.07
+101,Brazil luxury,550,104.16
+102,Brazil premium,250,47.34
+103,Luxembourg luxury,100,115.45
+104,Belgium premium,60,69.27
+105,Luxembourg premium,60,69.27
+106,Belgium luxury,100,115.45
+107,Belgium mid-range,35,40.41
+108,Argentina premium,45000,32.26
+109,Argentina luxury,100000,71.69
+110,Macau luxury,1600,198.36
+111,Hong Kong premium,800,102.11
+112,Macau mid-range,100,12.40
+113,Hong Kong mid-range,100,12.76
+114,Hong Kong luxury,1600,204.23
+115,Macau premium,800,99.18
+116,Austria luxury,100,115.45
+117,Austria premium,60,69.27
+118,Greece luxury,100,115.45
+119,Greece premium,60,69.27
