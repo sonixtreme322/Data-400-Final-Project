@@ -1,36 +1,47 @@
----
-title: "Starred and Questioned"
-subtitle: "Are Michelin Stars Efficiently Allocated Across Global Markets?"
-author: "David Whitmer & Benjamin Fox"
-date: "Data Science Capstone · 2026"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    css: [default, metropolis, metropolis-fonts, custom.css]
-    nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
-      slideNumberFormat: "%current% / %total%"
----
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-```
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Starred and Questioned</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="David Whitmer &amp; Benjamin Fox" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
 
-.small[*Are Michelin Stars efficiently allocated across global markets<br>given economic, geographic, and market constraints?*]
+.title[
+# Starred and Questioned
+]
+.subtitle[
+## Are Michelin Stars Efficiently Allocated Across Global Markets?
+]
+.author[
+### David Whitmer &amp; Benjamin Fox
+]
+.date[
+### Data Science Capstone · 2026
+]
+
+---
+
+
+
+.small[*Are Michelin Stars efficiently allocated across global markets&lt;br&gt;given economic, geographic, and market constraints?*]
 
 .title-right[
-```{r echo=FALSE, out.width="40%", fig.align="left"}
-knitr::include_graphics("michelin_man.png")
-```
+&lt;img src="michelin_man.png" width="40%" style="display: block; margin: auto auto auto 0;" /&gt;
 ]
 ---
 class: content-slide
 
 # Research Question
 
-<br>
+&lt;br&gt;
 
 .research-box[
 
@@ -38,7 +49,7 @@ class: content-slide
 
 ]
 
-<br>
+&lt;br&gt;
 
 .pull-left[
 **What we're testing:**
@@ -71,7 +82,7 @@ The 2026 Michelin Guide was collected in **March 2026** via the Algolia search A
 
 Each record includes:
 - Award level
-- Cuisine type & pricing tier
+- Cuisine type &amp; pricing tier
 - City, country, coordinates
 - Guide URL
 ]
@@ -84,7 +95,7 @@ Each record includes:
 Four country-level variables compiled for **47 model countries**:
 
 .var-badge[GDP per Capita]
-World Bank WDI `NY.GDP.PCAP.CD` · IMF WEO for Taiwan · Hardcoded from WB country pages for Türkiye & China Mainland
+World Bank WDI `NY.GDP.PCAP.CD` · IMF WEO for Taiwan · Hardcoded from WB country pages for Türkiye &amp; China Mainland
 
 .var-badge[Urbanization Rate]
 World Bank WDI `SP.URB.TOTL.IN.ZS` · CIA World Factbook for Taiwan (80.1%, 2023)
@@ -114,13 +125,13 @@ median_price_floor_usd_starred      1  ← Saudi Arabia (0 stars; filled with ov
 ```
 ]
 
-<br>
+&lt;br&gt;
 
 .footnote-text[
 One missing value in `median_price_floor_usd_starred` — Saudi Arabia has zero starred restaurants, so no starred price floor exists. Filled with the country's overall median price floor as a proxy. Saudi Arabia is later flagged as a **structural zero** and excluded in the robustness check.
 
 
-# Data Cleaning & Preparation
+# Data Cleaning &amp; Preparation
 
 .col-third[
 ### 4.1 Territory Consolidation
@@ -128,19 +139,19 @@ One missing value in `median_price_floor_usd_starred` — Saudi Arabia has zero 
 Several Michelin territories do not map to sovereign states:
 
 - 🇫🇷 **Andorra + Monaco → France**  
-  Tourism & restaurant counts summed; GDP & urban from France
+  Tourism &amp; restaurant counts summed; GDP &amp; urban from France
 
 - 🇨🇭 **Liechtenstein → Switzerland**  
   Same logic
 
 - 🇭🇰 **Hong Kong + Macao → Combined row**  
-  Counts summed; GDP & urban from HK SAR
+  Counts summed; GDP &amp; urban from HK SAR
 
 - 🇦🇪 **Abu Dhabi + Dubai → UAE**  
   AED rate ~3.67 applied consistently
 ]
 
-# Data Cleaning & Preparation
+# Data Cleaning &amp; Preparation
 
 .col-third[
 ### 4.2 China Naming Fix
@@ -156,7 +167,7 @@ while **660 used:**
 All three reassigned to `"China Mainland"` for consistent grouping.
 
 ---
-# Data Cleaning & Preparation
+# Data Cleaning &amp; Preparation
 
 ### 4.3 Price Floor Normalization
 
@@ -184,11 +195,11 @@ class: content-slide
 
 # Country-Level Aggregation
 
-<br>
+&lt;br&gt;
 
 The **18,837 restaurant rows** were collapsed to **47 country rows.**
 
-<br>
+&lt;br&gt;
 
 .agg-grid[
 
@@ -229,7 +240,7 @@ Stars per $10k GDP
 
 ]
 
-<br>
+&lt;br&gt;
 
 .footnote-text[⚠ The three density ratio variables were **excluded from the regression** — they are derived from the dependent variable and would introduce circularity.]
 
@@ -238,7 +249,7 @@ class: content-slide
 
 # Model Choice — Negative Binomial Regression
 
-<br>
+&lt;br&gt;
 
 .pull-left[
 
@@ -248,7 +259,7 @@ class: content-slide
 
 ❌ **Poisson** — assumes variance = mean; our data violates this severely
 
-<br>
+&lt;br&gt;
 
 ### Distribution of `n_total_starred`
 
@@ -269,16 +280,16 @@ Heavy right-skew. Heavily overdispersed.
 
 Negative Binomial extends Poisson by introducing a dispersion parameter **α**:
 
-$$\text{Var}(Y) = \mu + \alpha \cdot \mu^2$$
+`$$\text{Var}(Y) = \mu + \alpha \cdot \mu^2$$`
 
-where $\mu_i = \exp(\mathbf{x}_i^\top \boldsymbol{\beta})$
+where `\(\mu_i = \exp(\mathbf{x}_i^\top \boldsymbol{\beta})\)`
 
 - When α → 0, NB2 reduces to Poisson  
 - **Large α** = substantial unexplained variance after controlling for structural factors  
 - Implemented via **maximum likelihood** (`scipy.optimize`, L-BFGS-B)  
 - Standard errors from **numerical Hessian** of the negative log-likelihood
 
-<br>
+&lt;br&gt;
 
 .model-note[Implemented directly via `scipy.optimize` — math identical to `statsmodels` NB2]
 
@@ -287,9 +298,9 @@ where $\mu_i = \exp(\mathbf{x}_i^\top \boldsymbol{\beta})$
 ---
 class: content-slide
 
-# Regression Results & Star Allocation Residuals
+# Regression Results &amp; Star Allocation Residuals
 
-<br>
+&lt;br&gt;
 
 .placeholder-box[
 
@@ -301,11 +312,9 @@ class: content-slide
 **Right panel:** Horizontal residual bar chart ranked most positive → most negative  
 (red = over-represented · blue = under-represented)
 
-<br>
+&lt;br&gt;
 
-```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("negbin_results.png")
-```
+&lt;img src="negbin_results.png" width="100%" /&gt;
 
 ]
 
@@ -314,7 +323,7 @@ class: content-slide
 
 # Ben's Classification Analysis
 
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 .center[
 .placeholder-box[
@@ -331,13 +340,13 @@ class: content-slide
 
 # Conclusion
 
-<br>
+&lt;br&gt;
 
 .conclusion-intro[
 The **Star Allocation Residual** — actual minus predicted stars — reveals a systematic, interpretable pattern that is the quantitative core of this project.
 ]
 
-<br>
+&lt;br&gt;
 
 .pull-left[
 ### 🔴 Over-Represented
@@ -368,7 +377,7 @@ All are **legacy Michelin markets** with decades of guide history.
 
 ]
 
-<br>
+&lt;br&gt;
 
 .conclusion-stat[
 The USA gap of **−325** is larger than Italy's **entire star count.** The model predicts 601 American stars — only 276 exist. This is the quantitative expression of Michelin's geographic bias.
@@ -379,10 +388,148 @@ class: final-slide, center, middle
 
 # Thank You
 
-**David Whitmer & Benjamin Fox**
+**David Whitmer &amp; Benjamin Fox**
 
 *Data Science Capstone · 2026*
 
-<br>
+&lt;br&gt;
 
 .small[Michelin Guide 2026 · World Bank WDI · IMF WEO · UNWTO · Eurostat NACE 56.1]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false,
+  "ratio": "16:9",
+  "slideNumberFormat": "%current% / %total%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
