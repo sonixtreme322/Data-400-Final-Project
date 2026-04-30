@@ -75,7 +75,10 @@ Each record includes:
 - City, country, coordinates
 - Guide URL
 ]
+
 ---
+class: content-slide
+
 # Data Collection
 
 .col-right[
@@ -96,6 +99,8 @@ UNWTO World Tourism Barometer + STB, JNTO, KTO, HKTB · **2023 as primary regres
 Eurostat NACE 56.1 for EU · national equivalents elsewhere · Confidence flags: HIGH / MEDIUM / LOW
 ]
 ---
+class: content-slide
+
 # Clean Dataset
 
 .code-output[
@@ -117,9 +122,10 @@ median_price_floor_usd_starred      1  ← Saudi Arabia (0 stars; filled with ov
 <br>
 
 .footnote-text[
-One missing value in `median_price_floor_usd_starred` — Saudi Arabia has zero starred restaurants, so no starred price floor exists. Filled with the country's overall median price floor as a proxy. Saudi Arabia is later flagged as a **structural zero** and excluded in the robustness check.
+One missing value in `median_price_floor_usd_starred` — Saudi Arabia has zero starred restaurants, so no starred price floor exists. Filled with the country's overall median price floor as a proxy. Saudi Arabia is later flagged as a **structural zero** and excluded in the robustness check.]
 
-
+---
+class: content-slide
 # Data Cleaning & Preparation
 
 .col-third[
@@ -139,7 +145,7 @@ Several Michelin territories do not map to sovereign states:
 - 🇦🇪 **Abu Dhabi + Dubai → UAE**  
   AED rate ~3.67 applied consistently
 ]
-
+---
 # Data Cleaning & Preparation
 
 .col-third[
@@ -153,7 +159,7 @@ while **660 used:**
 
 .code-inline[`"China Mainland"`]
 
-All three reassigned to `"China Mainland"` for consistent grouping.
+All three reassigned to `"China Mainland"` for consistent grouping.]
 
 ---
 # Data Cleaning & Preparation
@@ -163,7 +169,6 @@ All three reassigned to `"China Mainland"` for consistent grouping.
 Michelin publishes pricing in **local currency** — cross-country comparison is meaningless without conversion.
 
 All tier thresholds mapped to **USD using March 2026 exchange rates**, creating a continuous `price_floor_usd` variable with **100% coverage** across 18,837 restaurants.
-]
 
 .col-third[
 ### Missing Tier Fills
@@ -175,7 +180,7 @@ Several countries had incomplete pricing tiers:
 - **Saudi Arabia** → all tiers filled using Gulf state equivalents (SAR pegged at 3.75/USD)
 - **Poland, Argentina, Brazil, Hungary, Serbia, Philippines** → derived exchange rates from existing tier thresholds
 
-.badge-pill[Affordable tier = $0 universally — Michelin's own definition]
+.badge-pill[Affordable tier = $0 universally — Michelin's own definition
 ]
 ]
 
@@ -184,72 +189,58 @@ class: content-slide
 
 # Country-Level Aggregation
 
-<br>
-
 The **18,837 restaurant rows** were collapsed to **47 country rows.**
 
-<br>
-
-.agg-grid[
-
-.agg-box[
+.pull-left[
 **Award Counts**  
 Selected · Bib Gourmand  
 1★ · 2★ · 3★  
 Total starred
 ]
 
-.agg-box[
+.pull-right[
 **Star Intensity**  
-Weighted star count  
-(1×one + 2×two + 3×three)  
-% of listed that are starred
+  Weighted star count  
+  (1×one + 2×two + 3×three)  
+  % of listed that are starred
 ]
 
-.agg-box[
+.pull-left[
 **Pricing**  
 Tier composition (4 tiers)  
 Median price floor USD  
 Starred median separately
 ]
 
-.agg-box[
+.pull-right[
 **Market Context**  
 Top cuisine (starred)  
 Cities covered  
 Green stars
 ]
 
-.agg-box[
+.pull-left[
 **Density Ratios**  
 Stars per 100k restaurants  
 Stars per million tourists  
 Stars per $10k GDP
 ]
 
-]
-
 <br>
 
-.footnote-text[⚠ The three density ratio variables were **excluded from the regression** — they are derived from the dependent variable and would introduce circularity.]
+.pull_right[***Footnote***:
+The three density ratio variables were **excluded from the regression** — they are derived from the dependent variable and would introduce circularity.]
 
 ---
 class: content-slide
 
 # Model Choice — Negative Binomial Regression
 
-<br>
-
 .pull-left[
-
 ### The problem with alternatives
+- **OLS** — assumes continuous, normally distributed outcome; would produce biased estimates and **potentially negative predictions**
 
-❌ **OLS** — assumes continuous, normally distributed outcome; would produce biased estimates and **potentially negative predictions**
-
-❌ **Poisson** — assumes variance = mean; our data violates this severely
-
-<br>
-
+- **Poisson** — assumes variance = mean; our data violates this severely
 ### Distribution of `n_total_starred`
 
 | Statistic | Value |
@@ -258,9 +249,6 @@ class: content-slide
 | Std Dev   | 135   |
 | Min       | 0 (Saudi Arabia) |
 | Max       | 669 (France) |
-
-Heavy right-skew. Heavily overdispersed.
-
 ]
 
 .pull-right[
@@ -278,8 +266,6 @@ where $\mu_i = \exp(\mathbf{x}_i^\top \boldsymbol{\beta})$
 - Implemented via **maximum likelihood** (`scipy.optimize`, L-BFGS-B)  
 - Standard errors from **numerical Hessian** of the negative log-likelihood
 
-<br>
-
 .model-note[Implemented directly via `scipy.optimize` — math identical to `statsmodels` NB2]
 
 ]
@@ -289,21 +275,15 @@ class: content-slide
 
 # Regression Results & Star Allocation Residuals
 
-<br>
-
 .placeholder-box[
 
-### 📊 Visualizations go here
+.pull-left[**Left panel:** Predicted vs Actual scatter plot with 45° reference line  
+(countries above line = over-allocated · below = under-allocated)]
 
-**Left panel:** Predicted vs Actual scatter plot with 45° reference line  
-(countries above line = over-allocated · below = under-allocated)
+.pull-right[**Right panel:** Horizontal residual bar chart ranked most positive → most negative  
+(red = over-represented · blue = under-represented)]
 
-**Right panel:** Horizontal residual bar chart ranked most positive → most negative  
-(red = over-represented · blue = under-represented)
-
-<br>
-
-```{r, echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, fig.align="center",out.width="65%"}
 knitr::include_graphics("negbin_results.png")
 ```
 
@@ -312,35 +292,60 @@ knitr::include_graphics("negbin_results.png")
 ---
 class: content-slide
 
-# Ben's Classification Analysis
+# Classification Analysis
 
-<br><br><br>
+### Decision Tree
 
-.center[
-.placeholder-box[
+Michelin's restaurant database holds more rankings than just the stars, and using a basic decision tree classifier we can see just how many never get even one star.
 
-### Ben's Section
+```{r, echo=FALSE, fig.align="center",out.width="75%"}
+knitr::include_graphics("decisionTree1.png")
+```
 
-*Content to be added*
+---
+class: content-slide
 
-]
-]
+# Classification Analysis
+
+### Choosing classifiers
+
+Even if this portion of the project only looked at Michelin Stars, it still couldn't fully be examined with a binary classifier. Thus, our options were limited to random forest and gradient boosted classifiers. Both of whom scored... accurately but lower than desired.
+
+.pull-left[**Random Forest Accuracy**: 0.6725]
+.pull-right[**Gradient Boosted Accuracy**: 0.6791]
+
+```{r, echo=FALSE, out.width="45%"}
+knitr::include_graphics("randomForestMatrix.png")
+knitr::include_graphics("gradientBoostedMatrix.png")
+```
+
+---
+class: content-slide
+
+# Classification Analysis
+
+### Feature Importances
+
+Their respective feature important lists were notable only in reaffirming the importance of pricing on receiving any Michelin ranking, and geographic biases. Moreso towards Western Europe as seen via the initial decision tree.
+
+.pull-left[**Random Forest**]
+.pull-right[**Gradient Boosted**]
+
+```{r, echo=FALSE, out.width="45%"}
+knitr::include_graphics("forestFeatures.png")
+knitr::include_graphics("boostedFeatures.png")
+```
 
 ---
 class: content-slide
 
 # Conclusion
 
-<br>
-
-.conclusion-intro[
-The **Star Allocation Residual** — actual minus predicted stars — reveals a systematic, interpretable pattern that is the quantitative core of this project.
+.conclusion-intro[The **Star Allocation Residual** — actual minus predicted stars — reveals a systematic, interpretable pattern that is the quantitative core of this project.
 ]
 
-<br>
-
 .pull-left[
-### 🔴 Over-Represented
+### Over-Represented
 *More stars than economics predicts*
 
 | Country | Residual |
@@ -355,7 +360,7 @@ All are **legacy Michelin markets** with decades of guide history.
 ]
 
 .pull-right[
-### 🔵 Under-Represented
+### Under-Represented
 *Fewer stars than economics predicts*
 
 | Country | Residual |
@@ -366,12 +371,7 @@ All are **legacy Michelin markets** with decades of guide history.
 | Denmark | −87 |
 | Türkiye | −46 |
 
-]
-
-<br>
-
-.conclusion-stat[
-The USA gap of **−325** is larger than Italy's **entire star count.** The model predicts 601 American stars — only 276 exist. This is the quantitative expression of Michelin's geographic bias.
+The USA gap of **−325** is larger than Italy's **entire star count.** This is the quantitative expression of Michelin's geographic bias.
 ]
 
 ---
